@@ -16,9 +16,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(#8768ce, #3c2a70);
+    background: linear-gradient(#4f0c55);
 }
-
+/*(#8768ce, #3c2a70); cores 1° gradiente*/
 /* Cabeçalho */
 .denuncia-header {
     background-color: #200038;
