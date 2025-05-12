@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container principal */
+.denuncia-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(#8768ce, #3c2a70);
+}
+
+/* Cabeçalho */
+.denuncia-header {
+    background-color: #200038;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.denuncia-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+/* Conteúdo principal */
+.denuncia-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Cards padronizados */
+.card {
+    background-color: #200038;
+    border-radius: 15px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* Ícones */
+.icon {
+    font-size: 2.5rem;
+    color: #9c27b0;
+    margin-bottom: 1rem;
+    display: block;
+    text-align: center;
+}
+
+.alert-section .card {
+    background-color: #200038;
+    cursor: pointer;
+    min-height: 150px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.alert-section .card:hover {
+    background-color: #7b1fa2;
+    transform: scale(1.02);
+}
+
+.alert-section .card h2 {
+    margin-bottom: 0;
+    font-size: 2.2rem;
+}
+
+.alert-section .submit-btn {
+    display: none;
+}
+
+/* Formulário de Denúncia */
+.report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.form-group select,
+.form-group textarea,
+.form-group input[type="file"] {
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-family: 'Nunito', sans-serif;
+    color: rgb(13, 0, 77);
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Botões */
+.submit-btn {
+    background-color: #9c27b0;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #7b1fa2;
+}
+
+/* Seção de Instruções */
+.instructions-list {
+    padding-left: 1.6rem;
+    font-size: 1.1rem;
+}
+
+.instructions-list li {
+    margin-bottom: 0.8rem;
+}
+
+/* Rodapé */
+.denuncia-footer {
+    background-color: #200038;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+/* Responsividade */
+@media (max-width: 790px) {
+    .denuncia-content {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .card {
+        padding: 1.5rem;
+        min-height: 250px;
+        max-width: 100%;
+    }
+    
+    .card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .denuncia-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .icon {
+        font-size: 2rem;
+    }
+    
+    .form-group label {
+        font-size: 1rem;
+    }
+    
+    .alert-section .card h2 {
+        font-size: 1.8rem;
+    }
+}
