@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Localização - Vítima (Desktop)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="share-location.css" />
+  <link rel="stylesheet" href="map-styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <style>
+    /* Estilos específicos para o mapa Leaflet */
+    #map {
+      width: 100%;
+      height: 100%;
+      background-color: #f0f0f0;
+      z-index: 1;
+    }
+    
+    .map-placeholder {
+      display: none; /* Esconder o placeholder antigo */
+    }
+    
+    .map-container {
+      position: relative;
+    }
+    
+    .map-controls {
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="user-profile">
+        <div class="user-avatar"><i class="fas fa-user"></i></div>
+        <div class="user-details">
+          <h1 class="user-name">Usuário</h1>
+          <p class="user-id">ID: VS-2025-7842</p>
+        </div>
+        <div class="connection-status connected">
+          <i class="fas fa-wifi"></i><span>Conectado</span>
+        </div>
+      </div>
+
+      <div class="location-info">
+        <h2 class="section-title">Localização Atual</h2>
+        <div class="info-item">
+          <i class="fas fa-map-pin"></i>
+          <span id="current-address">Aguardando localização...</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-clock"></i>
+          <span id="update-time">Última atualização: ---</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-crosshairs"></i>
+          <span id="accuracy">Precisão: ---</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-globe"></i>
+          <span>Coordenadas: <span id="latitude">---</span>, <span id="longitude">---</span></span>
+        </div>
+      </div>
+
+      <div class="status-indicators">
+        <h2 class="section-title">Status do Sistema</h2>
+        <div class="indicator-item">
+          <div class="indicator-icon"><i class="fas fa-battery-three-quarters"></i></div>
+          <div class="indicator-details">
+            <h3>Bateria</h3>
+            <div class="progress-bar"><div class="progress" style="width: 75%;"></div></div>
+            <span>75%</span>
+          </div>
+        </div>
+        <div class="indicator-item">
+          <div class="indicator-icon gps"><i class="fas fa-satellite-dish"></i></div>
+          <div class="indicator-details">
+            <h3>GPS</h3>
+            <div class="progress-bar"><div class="progress" style="width: 0%;" id="gps-bar"></div></div>
+            <span id="gps-status">Desativado</span>
+          </div>
+        </div>
+        <div class="indicator-item">
+          <div class="indicator-icon active"><i class="fas fa-broadcast-tower"></i></div>
+          <div class="indicator-details">
+            <h3>Rede</h3>
+            <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
+            <span>4G Estável</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="share-location-section">
+        <button class="share-location-button">
+          <i class="fas fa-share-alt"></i><span>COMPARTILHAR LOCALIZAÇÃO</span>
+        </button>
+        <p class="share-info">Compartilhe sua localização com contatos de emergência</p>
+      </div>
+
+      <div class="emergency-section">
+        <button class="emergency-button">
+          <i class="fas fa-exclamation-triangle"></i><span>EMERGÊNCIA</span>
+        </button>
+        <p class="emergency-info">Pressione em caso de perigo imediato</p>
+      </div>
+
+      <div class="app-info">
+        <p>Sistema de Proteção e Localização</p>
+        <p>v1.0.4</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-title"><h2>Monitoramento em Tempo Real</h2></div>
+        <div class="header-controls">
+          <button class="control-btn share-btn"><i class="fas fa-share-alt"></i><span>Compartilhar</span></button>
+          <button class="control-btn update-btn"><i class="fas fa-sync-alt"></i><span>Atualizar</span></button>
+          <button class="control-btn settings-btn"><i class="fas fa-cog"></i><span>Configurações</span></button>
+        </div>
+      </header>
+
+      <div class="map-container">
+        <!-- Novo mapa Leaflet -->
+        <div id="map"></div>
+        
+        <!-- Placeholder antigo (será escondido) -->
+        <div class="map-placeholder">
+          <div class="map-overlay">
+            <div class="current-location-marker">
+              <div class="marker-pulse"></div>
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-controls">
+          <div class="control-group">
+            <button class="map-control-btn" id="zoom-in"><i class="fas fa-plus"></i></button>
+            <button class="map-control-btn" id="zoom-out"><i class="fas fa-minus"></i></button>
+          </div>
+          <div class="control-group">
+            <button class="map-control-btn" id="center-map"><i class="fas fa-location-arrow"></i></button>
+            <button class="map-control-btn" id="toggle-layers"><i class="fas fa-layer-group"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="location-history">
+        <h3 class="history-title">Histórico de Localizações</h3>
+        <div class="history-list">
+          <!-- Histórico será preenchido dinamicamente pelo JavaScript -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Overlay de compartilhamento de localização -->
+  <div class="share-overlay" id="shareOverlay">
+    <div class="share-container">
+      <div class="share-header">
+        <h3><i class="fas fa-share-alt"></i> Compartilhar Localização</h3>
+        <button class="close-btn"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="share-body">
+        <div class="share-location-info">
+          <div class="location-preview">
+            <div id="mini-map"></div>
+          </div>
+          <div class="location-details">
+            <h4>Sua localização atual</h4>
+            <p><i class="fas fa-map-pin"></i> Carregando endereço...</p>
+            <p><i class="fas fa-clock"></i> Atualizado: --/--/---- --:--</p>
+          </div>
+        </div>
+        
+        <div class="share-options">
+          <h4>Compartilhar com:</h4>
+          <div class="share-option-list">
+            <div class="share-option">
+              <input type="checkbox" id="share-emergency" checked>
+              <label for="share-emergency">Contatos de emergência</label>
+            </div>
+            <div class="share-option">
+              <input type="checkbox" id="share-admin" checked>
+              <label for="share-admin">Administrador do sistema</label>
+            </div>
+            <div class="share-option">
+              <input type="checkbox" id="share-police">
+              <label for="share-police">Polícia</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="share-duration">
+          <h4>Duração do compartilhamento:</h4>
+          <div class="duration-options">
+            <button class="duration-btn active" data-duration="15">15 min</button>
+            <button class="duration-btn" data-duration="30">30 min</button>
+            <button class="duration-btn" data-duration="60">1 hora</button>
+            <button class="duration-btn" data-duration="continuous">Contínuo</button>
+          </div>
+        </div>
+        
+        <div class="share-message">
+          <h4>Mensagem (opcional):</h4>
+          <textarea placeholder="Adicione uma mensagem para enviar junto com sua localização..."></textarea>
+        </div>
+        
+        <div class="share-actions">
+          <button class="cancel-btn">Cancelar</button>
+          <button class="share-btn">Compartilhar Agora</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay de alerta -->
+  <div class="alert-overlay" id="alertOverlay">
+    <div class="alert-container">
+      <div class="alert-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>Localização Atualizada</h3>
+      <p>Sua localização foi atualizada com sucesso.</p>
+      <button class="close-btn">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Overlay de confirmação de compartilhamento -->
+  <div class="alert-overlay" id="shareConfirmOverlay">
+    <div class="alert-container">
+      <div class="alert-icon share-success">
+        <i class="fas fa-share-alt"></i>
+      </div>
+      <h3>Localização Compartilhada</h3>
+      <p>Sua localização foi compartilhada com sucesso.</p>
+      <button class="close-btn">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <script src="script.js"></script>
+</body>
+</html>
