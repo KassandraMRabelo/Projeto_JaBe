@@ -552,4 +552,4 @@ document.addEventListener('DOMContentLoaded', function() {
             hidePermissionModal();
         }
     });
-});
+})
