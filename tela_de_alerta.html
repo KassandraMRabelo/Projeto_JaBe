@@ -3,106 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Denúncias - COMPRE AQUI</title>
+    <title>Sistema de Denúncias - Jabe</title>
+    <link rel="icon" type="image/png" href="imagens/icone-removebg-preview.png" sizes="32x32">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-    <div class="website-container">
-        <!-- Cabeçalho -->
-        <header class="main-header">
-            <div class="header-content">
-                <h1><i class="fas fa-shield-alt"></i> COMPRE AQUI</h1>
-                <nav class="main-nav">
-                    <a href="#denunciar">Fazer Denúncia</a>
-                    <a href="#informacoes">Informações</a>
-                    <a href="#contato">Contato</a>
-                </nav>
-            </div>
-        </header>
-
-        <!-- Conteúdo Principal -->
-        <main class="main-content">
-            <!-- Seção Hero -->
-            <section class="hero-section">
-                <div class="hero-content">
-                    <h2>Sistema Seguro de Denúncias</h2>
-                    <p>Protegemos sua identidade conforme a Lei 13.709/2018 (LGPD)</p>
-                </div>
-            </section>
-
-            <!-- Grid de Funcionalidades -->
-            <div class="features-grid">
-                <!-- Card de Alerta -->
-                <section class="feature-card emergency-card">
-                    <div class="card-content">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Alerta Imediato</h3>
-                        <p>Acionamento rápido das autoridades</p>
-                        <button class="emergency-btn">Ativar Alerta</button>
-                    </div>
-                </section>
-
-                <!-- Card de Denúncia -->
-                <section class="feature-card report-card">
-                    <div class="card-content">
-                        <i class="fas fa-edit"></i>
-                        <h3>Denúncia Elaborada</h3>
-                        <p>Registro detalhado com acompanhamento</p>
-                        <button class="report-btn">Iniciar Denúncia</button>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Formulário de Denúncia -->
-            <section class="report-section" id="denunciar">
-                <div class="form-container">
-                    <h2><i class="fas fa-pencil-alt"></i> Formulário de Denúncia</h2>
-                    <form id="denunciaForm">
-                        <!-- Campos do formulário mantidos conforme anterior -->
-                        <!-- ... -->
-                    </form>
-                </div>
-            </section>
-        </main>
-
-        <!-- Rodapé -->
-        <footer class="main-footer">
-            <div class="footer-columns">
-                <div class="footer-col">
-                    <h4>Institucional</h4>
-                    <ul>
-                        <li><a href="#sobre">Sobre Nós</a></li>
-                        <li><a href="#seguranca">Política de Segurança</a></li>
-                        <li><a href="#privacidade">Privacidade</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Contatos</h4>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> 190 - Polícia Militar</li>
-                        <li><i class="fas fa-envelope"></i> contato@compreaqui.com.br</li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Redes Sociais</h4>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 COMPRE AQUI - Todos os direitos reservados</p>
-            </div>
-        </footer>
+    <!-- Cabeçalho -->
+    <header class="main-header">
+    <div class="header-content">
+            <img src="imagens/logo_borboletaJaBe-removebg-preview.png" alt="Jabe" class="logo-image">
+        <p class="header-subtitle">Sistema de Denúncias para Mulheres em Situação de Violência</p>
     </div>
+</header>
 
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <!-- Seção de Ações -->
+        <section class="actions-section">
+            <div class="action-card" id="emergencyTrigger">
+                <div class="action-icon emergency">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Alerta Imediato</h3>
+                <p>Acionamento emergencial das autoridades</p>
+            </div>
+
+            <div class="action-card" id="reportTrigger">
+                <div class="action-icon report">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3>Denúncia Elaborada</h3>
+                <p>Registro detalhado da ocorrência</p>
+            </div>
+        </section>
+
+        <!-- Formulário de Alerta Imediato -->
+        <section id="emergencyForm" class="form-section" style="display: none;">
+            <div class="form-container">
+                <h2><i class="fas fa-exclamation-circle"></i> Alerta Imediato</h2>
+                <form id="immediateAlertForm">
+                    <div class="form-group">
+                        <label for="emergencyName"><i class="fas fa-user"></i> Nome Completo:</label>
+                        <input type="text" id="emergencyName" class="form-control" required>
+                        <div id="emergencyNameError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergencyCpf"><i class="fas fa-id-card"></i> CPF:</label>
+                        <input type="text" id="emergencyCpf" class="form-control" placeholder="000.000.000-00" required>
+                        <div id="emergencyCpfError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergencyPhone"><i class="fas fa-phone"></i> Telefone:</label>
+                        <input type="tel" id="emergencyPhone" class="form-control" placeholder="(00) 00000-0000" required>
+                        <div id="emergencyPhoneError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Localização Atual:</label>
+                        <div id="locationStatus" class="location-status">Aguardando permissão...</div>
+                        <button type="button" id="getLocationBtn" class="location-btn">
+                            <i class="fas fa-location-arrow"></i> Obter Localização
+                        </button>
+                        <div id="locationMapContainer"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancelEmergency" class="btn cancel-btn">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn submit-btn emergency">
+                            <i class="fas fa-bell"></i> Enviar Alerta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Formulário de Denúncia Elaborada -->
+        <section id="detailedReportForm" class="form-section" style="display: none;">
+            <div class="form-container">
+                <h2><i class="fas fa-file-alt"></i> Denúncia Elaborada</h2>
+                <form id="detailedReportFormElement">
+                    <div class="form-group">
+                        <label for="reportName"><i class="fas fa-user"></i> Nome Completo:</label>
+                        <input type="text" id="reportName" class="form-control" required>
+                        <div id="reportNameError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportCpf"><i class="fas fa-id-card"></i> CPF:</label>
+                        <input type="text" id="reportCpf" class="form-control" placeholder="000.000.000-00" required>
+                        <div id="reportCpfError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportPhone"><i class="fas fa-phone"></i> Telefone:</label>
+                        <input type="tel" id="reportPhone" class="form-control" placeholder="(00) 00000-0000" required>
+                        <div id="reportPhoneError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportType"><i class="fas fa-tag"></i> Tipo de Denúncia:</label>
+                        <select id="reportType" class="form-control" required>
+                            <option value="">Selecione...</option>
+                            <option value="Ameaça">Ameaça</option>
+                            <option value="Dano">Dano</option>
+                            <option value="Descumprimento de Medida Protetiva">Descumprimento de Medida Protetiva</option>
+                            <option value="Feminicídio">Feminicídio</option>
+                            <option value="Injúria">Injúria</option>
+                            <option value="Lesão Corporal">Lesão Corporal</option>
+                            <option value="Tentativa de Feminicídio">Tentativa de Feminicídio</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                        <div id="reportTypeError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportLocation"><i class="fas fa-map-marker-alt"></i> Local do Ocorrido:</label>
+                        <input type="text" id="reportLocation" class="form-control" required>
+                        <div id="reportLocationError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportDescription"><i class="fas fa-align-left"></i> Descrição Detalhada:</label>
+                        <textarea id="reportDescription" class="form-control" required rows="5"></textarea>
+                        <div class="char-counter"><span id="charCount">0</span>/5000 caracteres</div>
+                        <div id="reportDescriptionError" class="mensagem-erro"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportFiles"><i class="fas fa-paperclip"></i> Anexar Provas (opcional):</label>
+                        <div class="file-upload-container">
+                            <label class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Selecionar Arquivos</span>
+                                <input type="file" id="reportFiles" multiple class="file-upload-input">
+                            </label>
+                            <div id="filePreview" class="file-preview"></div>
+                         <label>
+                         <input type="checkbox" id="anonimoCheckbox" name="anonimo"> 
+                          Desejo fazer uma denúncia anônima
+                         </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancelReport" class="btn cancel-btn">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn submit-btn">
+                            <i class="fas fa-paper-plane"></i> Enviar Denúncia
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- Seção do Agressor -->
+<div class="agressor-section">
+    <button type="button" id="toggleAgressorInfo" class="btn agressor-toggle-btn">
+        <i class="fas fa-user-slash"></i> Adicionar informações sobre o agressor
+    </button>
+    
+    <div id="agressorInfoForm" class="agressor-form-container" style="display: none;">
+        <h4><i class="fas fa-exclamation-triangle"></i> Informações sobre o Agressor</h4>
+        
+        <div class="form-group">
+            <label for="agressorNome"><i class="fas fa-user"></i> Nome (ou apelido):</label>
+            <input type="text" id="agressorNome" class="form-control">
+        </div>
+        
+        <div class="form-group">
+            <label for="agressorIdade"><i class="fas fa-calendar-alt"></i> Idade aproximada:</label>
+            <input type="number" id="agressorIdade" class="form-control" min="12" max="120">
+        </div>
+        
+        <div class="form-group">
+            <label for="agressorDescricao"><i class="fas fa-align-left"></i> Descrição física/comportamental:</label>
+            <textarea id="agressorDescricao" class="form-control" rows="3"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="agressorRelacionamento"><i class="fas fa-heart-broken"></i> Relacionamento com a vítima:</label>
+            <select id="agressorRelacionamento" class="form-control">
+                <option value="">Selecione...</option>
+                <option value="Conjugue/Parceiro(a)">Cônjuge/Parceiro(a)</option>
+                <option value="Ex-Conjugue/Parceiro(a)">Ex-Cônjuge/Parceiro(a)</option>
+                <option value="Familiar">Familiar</option>
+                <option value="Colega de trabalho">Colega de trabalho</option>
+                <option value="Vizinho">Vizinho</option>
+                <option value="Desconhecido">Desconhecido</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="agressorEndereco"><i class="fas fa-map-marker-alt"></i> Endereço conhecido (opcional):</label>
+            <input type="text" id="agressorEndereco" class="form-control">
+        </div>
+    </div>
+</div>
+        </section>
+
+        <!-- Modal de Confirmação -->
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 id="modalTitle">Sucesso!</h2>
+                <p id="modalMessage">Sua denúncia foi registrada com sucesso.</p>
+                <button id="closeModal" class="modal-btn">OK</button>
+            </div>
+        </div>
+
+        <!-- Modal de Permissão de Localização -->
+<div id="permissionModal" class="modal">
+  <div class="modal-content permission-modal">
+    <div class="permission-header">
+      <i class="fas fa-map-marker-alt"></i>
+      <h3>Permissão de Localização</h3>
+    </div>
+    <div class="permission-body">
+      <p>Para fornecer o melhor serviço, precisamos da sua localização. Como deseja proceder?</p>
+    </div>
+    <div class="permission-actions">
+      <button id="denyPermission" class="btn permission-btn deny-btn">
+        <i class="fas fa-times"></i> Negar
+      </button>
+      <button id="askLaterPermission" class="btn permission-btn later-btn">
+        <i class="fas fa-clock"></i> Perguntar depois
+      </button>
+      <button id="grantPermission" class="btn permission-btn grant-btn">
+        <i class="fas fa-check"></i> Permitir
+      </button>
+    </div>
+  </div>
+</div>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="emergency-contacts">
+                <h4><i class="fas fa-phone-alt"></i> Contatos Emergenciais</h4>
+                <ul>
+                    <li>Polícia Militar: <strong>190</strong></li>
+                    <li>Disque Denúncia: <strong>181</strong></li>
+                    <li>Disque Direitos Humanos: <strong>100</strong></li>
+                </ul>
+            </div>
+            <p class="footer-disclaimer">Protegemos sua identidade conforme a Lei 13.709/2018 (LGPD).</p>
+        </div>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
