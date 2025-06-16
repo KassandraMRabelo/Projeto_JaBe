@@ -1,0 +1,95 @@
+/* Estilo do cabeçalho */
+.top-header {
+    background-color: #ba18c2;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.top-header h1 {
+    margin: 20px;
+    font-size: 25px;
+}
+
+.top-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.top-header nav ul li {
+    display: inline;
+}
+
+.top-header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px;
+}
+
+.top-header nav ul li a:hover {
+    color: #ffffff;
+}
+
+/* Resto do estilo */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.container {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.info-card {
+    background-color: #f6eff1;
+    border-left: 6px solid #ba18c2;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h2 {
+    margin: 0 0 10px;
+    color: #ba18c2;
+}
+
+.info-card p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.map-button {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 8px 12px;
+    background-color: #ba18c2;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.map-button:hover {
+    background-color: #95109a;
+}
+
+footer {
+    background-color: #ba18c2;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
