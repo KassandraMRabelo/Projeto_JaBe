@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Denúncias</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header com contadores -->
+    <header class="header">
+        <div class="header-content">
+            <img src="images/jabee.png" alt="Logo Jabee" class="logo-header">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-denuncias">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendentes">0</div>
+                    <div class="stat-label">Pendentes</div>
+                </div>
+                <div class="stat-card urgent">
+                    <div class="stat-number" id="urgentes">0</div>
+                    <div class="stat-label">Urgentes</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-number" id="atendidas">0</div>
+                    <div class="stat-label">Atendidas</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Layout principal -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#" data-section="dashboard">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-section="mapa">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Mapa em Tempo Real</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-section="relatorios">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Relatórios</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-section="configuracoes">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Botão menu mobile -->
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Conteúdo principal -->
+        <main class="main-content">
+            <!-- Seção Dashboard -->
+            <section id="dashboard-section" class="content-section active">
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="todos">Todos</button>
+                    <button class="filter-btn" data-filter="urgente">Urgentes</button>
+                    <button class="filter-btn" data-filter="nova">Novas</button>
+                    <button class="filter-btn" data-filter="em-atendimento">Em Atendimento</button>
+                    <button class="filter-btn" data-filter="atendida">Atendidas</button>
+                </div>
+
+                <div class="denuncias-container" id="denuncias-container">
+                    <!-- Cards de denúncias serão inseridos aqui via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção Mapa -->
+            <section id="mapa-section" class="content-section">
+                <div class="mapa-container">
+                    <div id="mapa" class="mapa"></div>
+                </div>
+            </section>
+
+            <!-- Outras seções -->
+            <section id="relatorios-section" class="content-section">
+                <h2>Relatórios</h2>
+                <p>Seção de relatórios em desenvolvimento...</p>
+            </section>
+
+            <section id="configuracoes-section" class="content-section">
+                <h2>Configurações</h2>
+                <p>Seção de configurações em desenvolvimento...</p>
+            </section>
+        </main>
+
+        <!-- Painel de detalhes -->
+        <aside class="details-panel" id="details-panel">
+            <div class="details-header">
+                <h3>Detalhes da Denúncia</h3>
+                <button class="close-details" id="close-details">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="details-content" id="details-content">
+                <!-- Conteúdo dos detalhes será inserido aqui -->
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal overlay para mobile -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/mapa.js"></script>
+</body>
+</html>
+
