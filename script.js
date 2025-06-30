@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const locationMapContainer = document.getElementById('locationMapContainer');
     
     
-    // Elementos do modal de permissão
+    // Elementos do modal de permissões
     const permissionModal = document.getElementById('permissionModal');
     const denyPermission = document.getElementById('denyPermission');
     const askLaterPermission = document.getElementById('askLaterPermission');
