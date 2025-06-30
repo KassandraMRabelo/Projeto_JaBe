@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Elementos do DOM
+    // ========== ELEMENTOS DO DOM ========== //
+    // Elementos dos formulários (mantidos)
     const toggleAgressorInfo = document.getElementById('toggleAgressorInfo');
     const agressorInfoForm = document.getElementById('agressorInfoForm');
     const emergencyTrigger = document.getElementById('emergencyTrigger');
@@ -12,30 +13,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const cancelReport = document.getElementById('cancelReport');
     const getLocationBtn = document.getElementById('getLocationBtn');
     const locationStatus = document.getElementById('locationStatus');
-    const confirmationModal = document.getElementById('confirmationModal');
-    const closeModal = document.getElementById('closeModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalMessage = document.getElementById('modalMessage');
     const reportDescription = document.getElementById('reportDescription');
     const charCount = document.getElementById('charCount');
     const reportFiles = document.getElementById('reportFiles');
     const filePreview = document.getElementById('filePreview');
     const locationMapContainer = document.getElementById('locationMapContainer');
     
-    
-    // Elementos do modal de permissões
+    // Elementos dos modais (mantidos)
+    const confirmationModal = document.getElementById('confirmationModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
     const permissionModal = document.getElementById('permissionModal');
     const denyPermission = document.getElementById('denyPermission');
     const askLaterPermission = document.getElementById('askLaterPermission');
     const grantPermission = document.getElementById('grantPermission');
 
-    // Variáveis
+    // Novos elementos da navegação (adicionados)
+    const navItems = document.querySelectorAll('.nav-item a');
+    const mainContentSections = {
+        inicio: document.querySelector('.actions-section'),
+        formularios: document.querySelectorAll('.form-section')
+    };
+
+    // ========== VARIÁVEIS ========== //
     let currentLocation = null;
     let emergencyCoords = null;
     let map = null;
     let marker = null;
     let permissionRequested = false;
 
+    // ========== FUNÇÕES EXISTENTES (MANTIDAS) ========== //
     // Expressões regulares para validação
     const regex = {
         nome: /^[A-Za-zÀ-ÖØ-öø-ÿ\s']+$/,
@@ -46,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         coordenadas: /^-?\d{1,3}\.\d+$/
     };
 
-    // Carrega a biblioteca Leaflet dinamicamente
+    // Carrega a biblioteca Leaflet
     function loadLeaflet() {
         return new Promise((resolve, reject) => {
             if (window.L) {
@@ -57,21 +65,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const leafletCSS = document.createElement('link');
             leafletCSS.rel = 'stylesheet';
             leafletCSS.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
-            leafletCSS.integrity = 'sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==';
-            leafletCSS.crossOrigin = '';
             document.head.appendChild(leafletCSS);
 
             const leafletJS = document.createElement('script');
             leafletJS.src = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js';
-            leafletJS.integrity = 'sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==';
-            leafletJS.crossOrigin = '';
             leafletJS.onload = resolve;
             leafletJS.onerror = reject;
             document.head.appendChild(leafletJS);
         });
     }
 
-    // Funções de validação
+    // Funções de validação (mantidas)
     function validarNome(nome) {
         if (!nome) return { valido: false, mensagem: 'Nome é obrigatório' };
         if (!regex.nome.test(nome)) return { valido: false, mensagem: 'Nome deve conter apenas letras' };
@@ -133,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
         permissionModal.style.display = 'none';
     }
 
-    // Funções principais
+    // Funções principais dos formulários
     function showEmergencyForm() {
         hideForms();
         emergencyForm.style.display = 'block';
@@ -322,55 +326,54 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleReportSubmit(e) {
-    e.preventDefault();
-    
-    if (!validarFormularioDenuncia()) {
-        return;
+        e.preventDefault();
+        
+        if (!validarFormularioDenuncia()) {
+            return;
+        }
+        
+        const anonimo = document.getElementById('anonimoCheckbox').checked;
+        const name = anonimo ? 'Anônimo' : document.getElementById('reportName').value;
+        const cpf = anonimo ? '' : document.getElementById('reportCpf').value;
+        const phone = anonimo ? '' : document.getElementById('reportPhone').value;
+        const type = document.getElementById('reportType').value;
+        const location = document.getElementById('reportLocation').value;
+        const description = reportDescription.value;
+        const files = reportFiles.files;
+        
+        const agressorInfo = {
+            nome: document.getElementById('agressorNome').value,
+            idade: document.getElementById('agressorIdade').value,
+            descricao: document.getElementById('agressorDescricao').value,
+            relacionamento: document.getElementById('agressorRelacionamento').value,
+            endereco: document.getElementById('agressorEndereco').value
+        };
+
+        console.log('Denúncia Elaborada Enviada:', {
+            anonimo,
+            name,
+            cpf,
+            phone,
+            type,
+            location,
+            description,
+            agressorInfo,
+            files: files ? Array.from(files).map(f => f.name) : [],
+            timestamp: new Date().toISOString()
+        });
+
+        showConfirmationModal(
+            'Denúncia Registrada!',
+            anonimo ? 
+                'Sua denúncia anônima foi recebida e será processada.' :
+                'Sua denúncia foi recebida e será processada pela equipe responsável.'
+        );
+
+        detailedReportFormElement.reset();
+        filePreview.innerHTML = '';
+        charCount.textContent = '0';
+        hideForms();
     }
-    
-    const anonimo = anonimoCheckbox.checked;
-    const name = anonimo ? 'Anônimo' : document.getElementById('reportName').value;
-    const cpf = anonimo ? '' : document.getElementById('reportCpf').value;
-    const phone = anonimo ? '' : document.getElementById('reportPhone').value;
-    const type = document.getElementById('reportType').value;
-    const location = document.getElementById('reportLocation').value;
-    const description = reportDescription.value;
-    const files = reportFiles.files;
-    
-    // Informações do agressor (todos os campos opcionais)
-    const agressorInfo = {
-        nome: document.getElementById('agressorNome').value,
-        idade: document.getElementById('agressorIdade').value,
-        descricao: document.getElementById('agressorDescricao').value,
-        relacionamento: document.getElementById('agressorRelacionamento').value,
-        endereco: document.getElementById('agressorEndereco').value
-    };
-
-    console.log('Denúncia Elaborada Enviada:', {
-        anonimo,
-        name,
-        cpf,
-        phone,
-        type,
-        location,
-        description,
-        agressorInfo,
-        files: files ? Array.from(files).map(f => f.name) : [],
-        timestamp: new Date().toISOString()
-    });
-
-    showConfirmationModal(
-        'Denúncia Registrada!',
-        anonimo ? 
-            'Sua denúncia anônima foi recebida e será processada.' :
-            'Sua denúncia foi recebida e será processada pela equipe responsável.'
-    );
-
-    detailedReportFormElement.reset();
-    filePreview.innerHTML = '';
-    charCount.textContent = '0';
-    hideForms();
-}
 
     function updateCharCount() {
         const count = reportDescription.value.length;
@@ -417,14 +420,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function toggleAgressorForm() {
-    if (agressorInfoForm.style.display === 'none') {
-        agressorInfoForm.style.display = 'block';
-        toggleAgressorInfo.innerHTML = '<i class="fas fa-minus-circle"></i> Ocultar informações sobre o agressor';
-    } else {
-        agressorInfoForm.style.display = 'none';
-        toggleAgressorInfo.innerHTML = '<i class="fas fa-user-slash"></i> Adicionar informações sobre o agressor';
+        if (agressorInfoForm.style.display === 'none') {
+            agressorInfoForm.style.display = 'block';
+            toggleAgressorInfo.innerHTML = '<i class="fas fa-minus-circle"></i> Ocultar informações sobre o agressor';
+        } else {
+            agressorInfoForm.style.display = 'none';
+            toggleAgressorInfo.innerHTML = '<i class="fas fa-user-slash"></i> Adicionar informações sobre o agressor';
+        }
     }
-}
 
     function showConfirmationModal(title, message) {
         modalTitle.textContent = title;
@@ -436,7 +439,37 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmationModal.style.display = 'none';
     }
 
-    // Event Listeners
+    // ========== NOVAS FUNÇÕES PARA NAVEGAÇÃO ========== //
+    function handleNavClick(e) {
+        e.preventDefault();
+        const target = e.target.getAttribute('href').substring(1);
+        
+        // Fecha qualquer formulário aberto
+        hideForms();
+        
+        // Remove a classe active de todos os itens
+        navItems.forEach(item => {
+            item.parentElement.classList.remove('active');
+        });
+        
+        // Adiciona a classe active ao item clicado
+        e.target.parentElement.classList.add('active');
+        
+        // Mostra a seção correspondente
+        if (target === 'inicio') {
+            mainContentSections.inicio.style.display = 'block';
+            mainContentSections.formularios.forEach(form => form.style.display = 'none');
+            window.scrollTo({
+                top: mainContentSections.inicio.offsetTop,
+                behavior: 'smooth'
+            });
+        } else {
+            mainContentSections.inicio.style.display = 'none';
+        }
+    }
+
+    // ========== EVENT LISTENERS ========== //
+    // Formulários e interações existentes
     emergencyTrigger.addEventListener('click', showEmergencyForm);
     reportTrigger.addEventListener('click', showReportForm);
     cancelEmergency.addEventListener('click', hideForms);
@@ -449,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
     reportFiles.addEventListener('change', handleFileUpload);
     toggleAgressorInfo.addEventListener('click', toggleAgressorForm);
     
-    // Event Listeners para o modal de permissão
+    // Modal de permissão
     denyPermission.addEventListener('click', () => {
         hidePermissionModal();
         locationStatus.textContent = 'Permissão negada. Você pode alterar isso nas configurações.';
@@ -464,6 +497,11 @@ document.addEventListener('DOMContentLoaded', function() {
         hidePermissionModal();
         permissionRequested = true;
         getCurrentLocation();
+    });
+
+    // Navegação
+    navItems.forEach(item => {
+        item.addEventListener('click', handleNavClick);
     });
 
     // Validação em tempo real
@@ -548,4 +586,6 @@ document.addEventListener('DOMContentLoaded', function() {
             hidePermissionModal();
         }
     });
+
+    document.querySelector('.nav-item a[href="#inicio"]').click();
 });
