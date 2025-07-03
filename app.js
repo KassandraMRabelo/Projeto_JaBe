@@ -427,7 +427,6 @@ function formatarDataCompleta(dataHora) {
     }) + ' às ' + data.toLocaleTimeString('pt-BR');
 }
 
-// Adicionar estilos para animações de notificação
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideInRight {

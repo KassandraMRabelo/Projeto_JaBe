@@ -107,7 +107,6 @@ const denunciasData = [
 ];
 
 
-// Função para obter estatísticas
 function getEstatisticas() {
     const total = denunciasData.length;
     const urgentes = denunciasData.filter(d => d.status === 'urgente').length;

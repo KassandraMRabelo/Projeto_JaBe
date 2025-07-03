@@ -317,7 +317,6 @@ function mostrarInfoDenuncia(denuncia) {
     `;
 }
 
-// Mostrar tooltip
 function mostrarTooltip(event, denuncia) {
     removerTooltip();
     
