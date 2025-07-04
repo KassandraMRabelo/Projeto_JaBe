@@ -638,7 +638,7 @@ body {
 .main-footer {
     background: var(--primary-color);
     color: var(--white);
-    padding: 1.2rem 0;
+    padding: 0.5rem 0;
     text-align: center;
     margin-top: auto;
     width: 100%;
@@ -647,7 +647,7 @@ body {
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1rem;
 }
 
 .emergency-contacts h4 {
