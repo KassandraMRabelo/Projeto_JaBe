@@ -1,6 +1,9 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // ========== ELEMENTOS DO DOM ========== //
-    // Elementos dos formulários (mantidos)
+
+
     const toggleAgressorInfo = document.getElementById('toggleAgressorInfo');
     const agressorInfoForm = document.getElementById('agressorInfoForm');
     const emergencyTrigger = document.getElementById('emergencyTrigger');
@@ -18,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const reportFiles = document.getElementById('reportFiles');
     const filePreview = document.getElementById('filePreview');
     const locationMapContainer = document.getElementById('locationMapContainer');
-    
-    // Elementos dos modais (mantidos)
+   
+    // Elementos dos modais
     const confirmationModal = document.getElementById('confirmationModal');
     const closeModal = document.getElementById('closeModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -29,12 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const askLaterPermission = document.getElementById('askLaterPermission');
     const grantPermission = document.getElementById('grantPermission');
 
-    // Novos elementos da navegação (adicionados)
+
+    // Elementos da navegação
     const navItems = document.querySelectorAll('.nav-item a');
     const mainContentSections = {
         inicio: document.querySelector('.actions-section'),
         formularios: document.querySelectorAll('.form-section')
     };
+
 
     // ========== VARIÁVEIS ========== //
     let currentLocation = null;
@@ -43,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let marker = null;
     let permissionRequested = false;
 
-    // ========== FUNÇÕES EXISTENTES (MANTIDAS) ========== //
-    // Expressões regulares para validação
+
+   
     const regex = {
         nome: /^[A-Za-zÀ-ÖØ-öø-ÿ\s']+$/,
         cpf: /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/,
@@ -54,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         coordenadas: /^-?\d{1,3}\.\d+$/
     };
 
+
     // Carrega a biblioteca Leaflet
     function loadLeaflet() {
         return new Promise((resolve, reject) => {
@@ -62,10 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+
             const leafletCSS = document.createElement('link');
             leafletCSS.rel = 'stylesheet';
             leafletCSS.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
             document.head.appendChild(leafletCSS);
+
 
             const leafletJS = document.createElement('script');
             leafletJS.src = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js';
@@ -75,13 +83,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Funções de validação (mantidas)
+
+    // Funções de validação
     function validarNome(nome) {
         if (!nome) return { valido: false, mensagem: 'Nome é obrigatório' };
         if (!regex.nome.test(nome)) return { valido: false, mensagem: 'Nome deve conter apenas letras' };
         if (nome.length < 3) return { valido: false, mensagem: 'Nome muito curto (mínimo 3 caracteres)' };
         return { valido: true };
     }
+
 
     function validarCPF(cpf) {
         if (!cpf) return { valido: false, mensagem: 'CPF é obrigatório' };
@@ -91,11 +101,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return { valido: true };
     }
 
+
     function validarTelefone(telefone) {
         if (!telefone) return { valido: false, mensagem: 'Telefone é obrigatório' };
         if (!regex.telefone.test(telefone)) return { valido: false, mensagem: 'Formato de telefone inválido' };
         return { valido: true };
     }
+
 
     function validarLocalizacao(localizacao) {
         if (!localizacao) return { valido: false, mensagem: 'Localização é obrigatória' };
@@ -103,12 +115,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return { valido: true };
     }
 
+
     function validarDescricao(descricao) {
         if (!descricao) return { valido: false, mensagem: 'Descrição é obrigatória' };
         if (descricao.length < 20) return { valido: false, mensagem: 'Descrição muito curta (mínimo 20 caracteres)' };
         if (descricao.length > 1000) return { valido: false, mensagem: 'Descrição muito longa (máximo 1000 caracteres)' };
         return { valido: true };
     }
+
 
     function mostrarErro(campo, mensagem) {
         const erroElement = document.getElementById(`${campo.id}Error`);
@@ -119,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+
     function limparErro(campo) {
         const erroElement = document.getElementById(`${campo.id}Error`);
         if (erroElement) {
@@ -128,14 +143,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+
     // Modal de Permissão
     function showPermissionModal() {
         permissionModal.style.display = 'flex';
     }
 
+
     function hidePermissionModal() {
         permissionModal.style.display = 'none';
     }
+
 
     // Funções principais dos formulários
     function showEmergencyForm() {
@@ -147,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+
     function showReportForm() {
         hideForms();
         detailedReportForm.style.display = 'block';
@@ -155,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
             behavior: 'smooth'
         });
     }
+
 
     function hideForms() {
         emergencyForm.style.display = 'none';
@@ -173,30 +193,33 @@ document.addEventListener('DOMContentLoaded', function() {
         getLocationBtn.disabled = false;
     }
 
+
     async function getCurrentLocation() {
         if (!permissionRequested) {
             showPermissionModal();
             return;
         }
-        
+       
         locationStatus.textContent = 'Obtendo localização...';
         getLocationBtn.disabled = true;
 
+
         try {
             await loadLeaflet();
-            
+           
             if (navigator.geolocation) {
                 const position = await new Promise((resolve, reject) => {
                     navigator.geolocation.getCurrentPosition(resolve, reject);
                 });
 
+
                 emergencyCoords = {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 };
-                
+               
                 showLocationOnMap(emergencyCoords);
-                
+               
                 locationStatus.textContent = 'Localização obtida com sucesso!';
                 getLocationBtn.innerHTML = '<i class="fas fa-check"></i> Localização Obtida';
                 getLocationBtn.style.backgroundColor = '#28a745';
@@ -211,9 +234,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+
     function showLocationOnMap(coords) {
         locationMapContainer.innerHTML = '';
-        
+       
         const mapElement = document.createElement('div');
         mapElement.id = 'map';
         mapElement.style.height = '300px';
@@ -221,14 +245,14 @@ document.addEventListener('DOMContentLoaded', function() {
         mapElement.style.borderRadius = '8px';
         mapElement.style.marginTop = '15px';
         locationMapContainer.appendChild(mapElement);
-        
+       
         map = L.map('map').setView([coords.latitude, coords.longitude], 16);
-        
+       
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 19
         }).addTo(map);
-        
+       
         marker = L.marker([coords.latitude, coords.longitude]).addTo(map)
             .bindPopup(`
                 <div style="padding: 10px;">
@@ -238,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `)
             .openPopup();
-        
+       
         L.circle([coords.latitude, coords.longitude], {
             color: 'blue',
             fillColor: '#1e90ff',
@@ -247,26 +271,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }).addTo(map);
     }
 
+
     function validarFormularioEmergencia() {
         const nome = document.getElementById('emergencyName');
         const cpf = document.getElementById('emergencyCpf');
         const telefone = document.getElementById('emergencyPhone');
-        
+       
         const valNome = validarNome(nome.value);
         const valCpf = validarCPF(cpf.value);
         const valTelefone = validarTelefone(telefone.value);
-        
+       
         if (!valNome.valido) mostrarErro(nome, valNome.mensagem);
         if (!valCpf.valido) mostrarErro(cpf, valCpf.mensagem);
         if (!valTelefone.valido) mostrarErro(telefone, valTelefone.mensagem);
-        
+       
         if (!emergencyCoords) {
             alert('Por favor, obtenha sua localização antes de enviar o alerta.');
             return false;
         }
-        
+       
         return valNome.valido && valCpf.valido && valTelefone.valido;
     }
+
 
     function validarFormularioDenuncia() {
         const nome = document.getElementById('reportName');
@@ -275,38 +301,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const localizacao = document.getElementById('reportLocation');
         const descricao = document.getElementById('reportDescription');
         const tipo = document.getElementById('reportType');
-        
+       
         const valNome = validarNome(nome.value);
         const valCpf = validarCPF(cpf.value);
         const valTelefone = validarTelefone(telefone.value);
         const valLocalizacao = validarLocalizacao(localizacao.value);
         const valDescricao = validarDescricao(descricao.value);
-        
+       
         if (!valNome.valido) mostrarErro(nome, valNome.mensagem);
         if (!valCpf.valido) mostrarErro(cpf, valCpf.mensagem);
         if (!valTelefone.valido) mostrarErro(telefone, valTelefone.mensagem);
         if (!valLocalizacao.valido) mostrarErro(localizacao, valLocalizacao.mensagem);
         if (!valDescricao.valido) mostrarErro(descricao, valDescricao.mensagem);
-        
+       
         if (tipo.value === "") {
             mostrarErro(tipo, 'Por favor, selecione um tipo de ocorrência');
             return false;
         }
-        
-        return valNome.valido && valCpf.valido && valTelefone.valido && 
+       
+        return valNome.valido && valCpf.valido && valTelefone.valido &&
                valLocalizacao.valido && valDescricao.valido;
     }
 
+
     function handleEmergencySubmit(e) {
         e.preventDefault();
-        
+       
         if (!validarFormularioEmergencia()) {
             return;
         }
-        
+       
         const name = document.getElementById('emergencyName').value;
         const cpf = document.getElementById('emergencyCpf').value;
         const phone = document.getElementById('emergencyPhone').value;
+
 
         console.log('Alerta de Emergência Enviado:', {
             name,
@@ -316,22 +344,25 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: new Date().toISOString()
         });
 
+
         showConfirmationModal(
             'Alerta Enviado!',
             'As autoridades foram acionadas com sua localização em tempo real.'
         );
 
+
         immediateAlertForm.reset();
         hideForms();
     }
 
+
     function handleReportSubmit(e) {
         e.preventDefault();
-        
+       
         if (!validarFormularioDenuncia()) {
             return;
         }
-        
+       
         const anonimo = document.getElementById('anonimoCheckbox').checked;
         const name = anonimo ? 'Anônimo' : document.getElementById('reportName').value;
         const cpf = anonimo ? '' : document.getElementById('reportCpf').value;
@@ -340,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const location = document.getElementById('reportLocation').value;
         const description = reportDescription.value;
         const files = reportFiles.files;
-        
+       
         const agressorInfo = {
             nome: document.getElementById('agressorNome').value,
             idade: document.getElementById('agressorIdade').value,
@@ -348,6 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
             relacionamento: document.getElementById('agressorRelacionamento').value,
             endereco: document.getElementById('agressorEndereco').value
         };
+
 
         console.log('Denúncia Elaborada Enviada:', {
             anonimo,
@@ -362,12 +394,14 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: new Date().toISOString()
         });
 
+
         showConfirmationModal(
             'Denúncia Registrada!',
-            anonimo ? 
+            anonimo ?
                 'Sua denúncia anônima foi recebida e será processada.' :
                 'Sua denúncia foi recebida e será processada pela equipe responsável.'
         );
+
 
         detailedReportFormElement.reset();
         filePreview.innerHTML = '';
@@ -375,19 +409,21 @@ document.addEventListener('DOMContentLoaded', function() {
         hideForms();
     }
 
+
     function updateCharCount() {
         const count = reportDescription.value.length;
         charCount.textContent = count;
-        
+       
         if (count > 1000) {
             reportDescription.value = reportDescription.value.substring(0, 1000);
             charCount.textContent = '1000';
         }
     }
 
+
     function handleFileUpload() {
         filePreview.innerHTML = '';
-        
+       
         if (reportFiles.files.length > 0) {
             Array.from(reportFiles.files).forEach((file, index) => {
                 const fileItem = document.createElement('div');
@@ -400,24 +436,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 filePreview.appendChild(fileItem);
             });
 
+
             document.querySelectorAll('.remove-file').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = parseInt(this.getAttribute('data-index'));
                     const dt = new DataTransfer();
                     const files = reportFiles.files;
-                    
+                   
                     for (let i = 0; i < files.length; i++) {
                         if (i !== index) {
                             dt.items.add(files[i]);
                         }
                     }
-                    
+                   
                     reportFiles.files = dt.files;
                     handleFileUpload();
                 });
             });
         }
     }
+
 
     function toggleAgressorForm() {
         if (agressorInfoForm.style.display === 'none') {
@@ -429,32 +467,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function showConfirmationModal(title, message) {
-        modalTitle.textContent = title;
-        modalMessage.textContent = message;
-        confirmationModal.style.display = 'flex';
-    }
+
+     function showConfirmationModal(title, message) {
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    confirmationModal.style.display = 'flex';
+   
+    document.querySelector('.ok-btn').focus();
+}
+
 
     function closeConfirmationModal() {
         confirmationModal.style.display = 'none';
     }
 
-    // ========== NOVAS FUNÇÕES PARA NAVEGAÇÃO ========== //
+
+    // NOVAS FUNÇÕES PARA NAVEGAÇÃO
+
+
     function handleNavClick(e) {
         e.preventDefault();
         const target = e.target.getAttribute('href').substring(1);
-        
+       
         // Fecha qualquer formulário aberto
         hideForms();
-        
+       
         // Remove a classe active de todos os itens
         navItems.forEach(item => {
             item.parentElement.classList.remove('active');
         });
-        
+       
         // Adiciona a classe active ao item clicado
         e.target.parentElement.classList.add('active');
-        
+       
         // Mostra a seção correspondente
         if (target === 'inicio') {
             mainContentSections.inicio.style.display = 'block';
@@ -467,6 +512,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mainContentSections.inicio.style.display = 'none';
         }
     }
+
 
     // ========== EVENT LISTENERS ========== //
     // Formulários e interações existentes
@@ -481,7 +527,9 @@ document.addEventListener('DOMContentLoaded', function() {
     reportDescription.addEventListener('input', updateCharCount);
     reportFiles.addEventListener('change', handleFileUpload);
     toggleAgressorInfo.addEventListener('click', toggleAgressorForm);
-    
+    document.querySelector('.close-modal-btn').addEventListener('click', closeConfirmationModal);
+    document.querySelector('.ok-btn').addEventListener('click', closeConfirmationModal);
+   
     // Modal de permissão
     denyPermission.addEventListener('click', () => {
         hidePermissionModal();
@@ -489,9 +537,11 @@ document.addEventListener('DOMContentLoaded', function() {
         permissionRequested = true;
     });
 
+
     askLaterPermission.addEventListener('click', () => {
         hidePermissionModal();
     });
+
 
     grantPermission.addEventListener('click', () => {
         hidePermissionModal();
@@ -499,10 +549,12 @@ document.addEventListener('DOMContentLoaded', function() {
         getCurrentLocation();
     });
 
+
     // Navegação
     navItems.forEach(item => {
         item.addEventListener('click', handleNavClick);
     });
+
 
     // Validação em tempo real
     document.getElementById('emergencyName').addEventListener('blur', function() {
@@ -514,6 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
     document.getElementById('emergencyCpf').addEventListener('blur', function() {
         const validacao = validarCPF(this.value);
         if (!validacao.valido) {
@@ -522,6 +575,7 @@ document.addEventListener('DOMContentLoaded', function() {
             limparErro(this);
         }
     });
+
 
     document.getElementById('emergencyPhone').addEventListener('blur', function() {
         const validacao = validarTelefone(this.value);
@@ -532,6 +586,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
     document.getElementById('reportName').addEventListener('blur', function() {
         const validacao = validarNome(this.value);
         if (!validacao.valido) {
@@ -540,6 +595,7 @@ document.addEventListener('DOMContentLoaded', function() {
             limparErro(this);
         }
     });
+
 
     document.getElementById('reportCpf').addEventListener('blur', function() {
         const validacao = validarCPF(this.value);
@@ -550,6 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
     document.getElementById('reportPhone').addEventListener('blur', function() {
         const validacao = validarTelefone(this.value);
         if (!validacao.valido) {
@@ -558,6 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
             limparErro(this);
         }
     });
+
 
     document.getElementById('reportLocation').addEventListener('blur', function() {
         const validacao = validarLocalizacao(this.value);
@@ -568,6 +626,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
     document.getElementById('reportDescription').addEventListener('blur', function() {
         const validacao = validarDescricao(this.value);
         if (!validacao.valido) {
@@ -577,7 +636,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Fechar modal ao clicar fora
+
+    /* Fechar modal ao clicar fora
     window.addEventListener('click', (e) => {
         if (e.target === confirmationModal) {
             closeConfirmationModal();
@@ -585,7 +645,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target === permissionModal) {
             hidePermissionModal();
         }
-    });
+    }); */
+
 
     document.querySelector('.nav-item a[href="#inicio"]').click();
 });
