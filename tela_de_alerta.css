@@ -622,6 +622,17 @@ body {
   color: white;
 }
 
+.back-btn {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  border: 1px solid var(--gray-color);
+}
+
+.back-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: var(--dark-color);
+}
+
 
 /* Rodapé do Site*/
 .main-footer {

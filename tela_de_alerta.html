@@ -258,28 +258,34 @@
         </div>
 
         <!-- Modal de Permissão de Localização -->
-        <div id="permissionModal" class="modal">
-            <div class="modal-content permission-modal">
-                <div class="permission-header">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h3>Permissão de Localização</h3>
-                </div>
-                <div class="permission-body">
-                    <p>Para fornecer o melhor serviço, precisamos da sua localização. Como deseja proceder?</p>
-                </div>
-                <div class="permission-actions">
-                    <button id="denyPermission" class="btn permission-btn deny-btn">
-                        <i class="fas fa-times"></i> Negar
-                    </button>
-                    <button id="askLaterPermission" class="btn permission-btn later-btn">
-                        <i class="fas fa-clock"></i> Perguntar depois
-                    </button>
-                    <button id="grantPermission" class="btn permission-btn grant-btn">
-                        <i class="fas fa-check"></i> Permitir
-                    </button>
-                </div>
-            </div>
+<div id="permissionModal" class="modal">
+    <div class="modal-content permission-modal">
+        <div class="permission-header">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Permissão de Localização</h3>
         </div>
+        <div class="permission-body">
+            <p>Para fornecer o melhor serviço, precisamos da sua localização. Como deseja proceder?</p>
+        </div>
+        <div class="permission-actions">
+            <button id="denyPermission" class="btn permission-btn deny-btn">
+                <i class="fas fa-times"></i> Negar
+            </button>
+            <button id="askLaterPermission" class="btn permission-btn later-btn">
+                <i class="fas fa-clock"></i> Perguntar depois
+            </button>
+            <button id="grantPermission" class="btn permission-btn grant-btn">
+                <i class="fas fa-check"></i> Permitir
+            </button>
+
+            <!-- ✅ Novo botão -->
+            <button id="closePermissionModal" class="btn permission-btn close-btn">
+                <i class="fas fa-home"></i> Voltar ao Início
+            </button>
+        </div>
+    </div>
+</div>
+
     </main>
 
     <!-- Rodapé -->

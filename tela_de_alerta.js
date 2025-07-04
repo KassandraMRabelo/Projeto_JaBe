@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const denyPermission = document.getElementById('denyPermission');
     const askLaterPermission = document.getElementById('askLaterPermission');
     const grantPermission = document.getElementById('grantPermission');
+    const closePermissionModal = document.getElementById('closePermissionModal');
+
 
 
     // Elementos da navegação
@@ -527,27 +529,41 @@ document.addEventListener('DOMContentLoaded', function() {
     reportDescription.addEventListener('input', updateCharCount);
     reportFiles.addEventListener('change', handleFileUpload);
     toggleAgressorInfo.addEventListener('click', toggleAgressorForm);
-    document.querySelector('.close-modal-btn').addEventListener('click', closeConfirmationModal);
-    document.querySelector('.ok-btn').addEventListener('click', closeConfirmationModal);
+    document.getElementById('confirmModal').addEventListener('click', closeConfirmationModal);
+    document.getElementById('closeModal').addEventListener('click', closeConfirmationModal);
+
    
-    // Modal de permissão
-    denyPermission.addEventListener('click', () => {
-        hidePermissionModal();
-        locationStatus.textContent = 'Permissão negada. Você pode alterar isso nas configurações.';
-        permissionRequested = true;
+   // Modal de permissão
+denyPermission.addEventListener('click', () => {
+    hidePermissionModal();
+    locationStatus.textContent = 'Permissão negada. Você pode alterar isso nas configurações.';
+    permissionRequested = true;
+});
+
+askLaterPermission.addEventListener('click', () => {
+    hidePermissionModal();
+});
+
+grantPermission.addEventListener('click', () => {
+    hidePermissionModal();
+    permissionRequested = true;
+    getCurrentLocation();
+});
+
+closePermissionModal.addEventListener('click', () => { // ✅ ADICIONADO
+    hidePermissionModal();
+    hideForms(); // esconde formulários
+    mainContentSections.inicio.style.display = 'block'; // mostra a seção inicial
+    window.scrollTo({
+        top: mainContentSections.inicio.offsetTop,
+        behavior: 'smooth'
     });
 
+    navItems.forEach(item => item.parentElement.classList.remove('active'));
+    document.querySelector('.nav-item a[href="#inicio"]').parentElement.classList.add('active');
+});
 
-    askLaterPermission.addEventListener('click', () => {
-        hidePermissionModal();
-    });
 
-
-    grantPermission.addEventListener('click', () => {
-        hidePermissionModal();
-        permissionRequested = true;
-        getCurrentLocation();
-    });
 
 
     // Navegação
