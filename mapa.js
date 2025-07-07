@@ -257,7 +257,7 @@ function carregarPinsDenuncias() {
     
     denunciasData.forEach((denuncia, index) => {
         const pin = document.createElement('div');
-        pin.className = denuncia-pin ${denuncia.status};
+        pin.className = `denuncia-pin ${denuncia.status}`;
         pin.dataset.id = denuncia.id;
         
         // Posicionamento simulado (em produção seria baseado nas coordenadas reais)
@@ -317,7 +317,6 @@ function mostrarInfoDenuncia(denuncia) {
     `;
 }
 
-// Mostrar tooltip
 function mostrarTooltip(event, denuncia) {
     removerTooltip();
     
@@ -381,3 +380,4 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(mapaSection, { attributes: true, attributeFilter: ['class'] });
     }
 });
+
