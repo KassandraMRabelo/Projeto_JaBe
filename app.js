@@ -135,7 +135,7 @@ function carregarDenuncias() {
 // Criar card de denúncia
 function criarCardDenuncia(denuncia) {
     const card = document.createElement('div');
-    card.className = `denuncia-card ${denuncia.status}`;
+    card.className = denuncia-card ${denuncia.status};
     card.dataset.id = denuncia.id;
     
     const statusTexto = {
@@ -301,7 +301,7 @@ function fecharDetalhes() {
 function alterarStatus(novoStatus) {
     if (!denunciaAtual) return;
     
-    const confirmacao = confirm(`Tem certeza que deseja alterar o status para "${novoStatus}"?`);
+    const confirmacao = confirm(Tem certeza que deseja alterar o status para "${novoStatus}"?);
     if (!confirmacao) return;
     
     if (atualizarStatus(denunciaAtual.id, novoStatus)) {
@@ -313,7 +313,7 @@ function alterarStatus(novoStatus) {
         carregarDenuncias();
         abrirDetalhes(denunciaAtual.id); // Reabrir detalhes atualizados
         
-        mostrarNotificacao(`Status alterado para "${novoStatus}" com sucesso!`, 'success');
+        mostrarNotificacao(Status alterado para "${novoStatus}" com sucesso!, 'success');
     } else {
         mostrarNotificacao('Erro ao alterar status da denúncia.', 'error');
     }
@@ -325,7 +325,7 @@ function repassarDenuncia() {
     
     const viatura = prompt('Digite o código da viatura para repassar:');
     if (viatura) {
-        mostrarNotificacao(`Denúncia repassada para a viatura ${viatura}`, 'success');
+        mostrarNotificacao(Denúncia repassada para a viatura ${viatura}, 'success');
     }
 }
 
@@ -348,7 +348,7 @@ function verRota() {
     if (!denunciaAtual) return;
     
     const endereco = encodeURIComponent(denunciaAtual.enderecoCompleto);
-    const url = `https://www.google.com/maps/search/?api=1&query=${endereco}`;
+    const url = https://www.google.com/maps/search/?api=1&query=${endereco};
     window.open(url, '_blank');
 }
 
@@ -378,7 +378,7 @@ function carregarMapa() {
 function mostrarNotificacao(mensagem, tipo = 'info') {
     // Criar elemento de notificação
     const notificacao = document.createElement('div');
-    notificacao.className = `notificacao ${tipo}`;
+    notificacao.className = notificacao ${tipo};
     notificacao.style.cssText = `
         position: fixed;
         top: 90px;
@@ -427,6 +427,7 @@ function formatarDataCompleta(dataHora) {
     }) + ' às ' + data.toLocaleTimeString('pt-BR');
 }
 
+// Adicionar estilos para animações de notificação
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideInRight {
@@ -450,6 +451,25 @@ style.textContent = `
             opacity: 0;
         }
     }
+        
 `;
 document.head.appendChild(style);
 
+document.getElementById('form-config').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const tema = document.getElementById('tema').value;
+  const notificacoes = document.getElementById('notificacoes').checked;
+  const resumo = document.getElementById('exibirResumo').checked;
+  const dev = document.getElementById('modoDesenvolvedor').checked;
+
+  const mensagem = `
+    Configurações salvas:<br>
+    Tema: <strong>${tema}</strong><br>
+    Notificações: ${notificacoes ? "ativadas" : "desativadas"}<br>
+    Resumo no painel: ${resumo ? "sim" : "não"}<br>
+    Modo desenvolvedor: ${dev ? "ativo" : "desativado"}
+  `;
+
+  document.getElementById('mensagem-config').innerHTML = mensagem;
+});

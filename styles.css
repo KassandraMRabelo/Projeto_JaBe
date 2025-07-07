@@ -8,17 +8,17 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f5f5f5;
-    color: #ffffff;
+    color: #333;
     line-height: 1.6;
 }
 
-/* Header */
+/* --- Header --- */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100px; /* ou ajuste conforme sua altura real */
+    height: 100px; /* Altura fixa do header */
     background: linear-gradient(to right, #ba18c2, #8768CE);
     padding: 1rem 2rem;
     display: flex;
@@ -26,33 +26,22 @@ body {
     justify-content: space-between;
     color: white;
     z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
 }
-
 
 .header-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    max-width: 2000px;
+    max-width: 1400px; /* Limita a largura do conteúdo do header */
     margin: 0 auto;
     gap: 1rem;
-}
-
-.header h1 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-align: center;
-    flex: 1;
-}
-
-.header h1 i {
-    margin-right: 0.5rem;
-    color: #e91e64;
+    width: 100%; /* Garante que o conteúdo ocupe a largura máxima */
 }
 
 .logo-header {
-    max-height: 95px;
+    max-height: 80px; /* Ajustado para caber melhor no header */
     width: auto;
     height: auto;
 }
@@ -62,46 +51,49 @@ body {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: flex-end; /* Alinha os cards à direita no header */
 }
 
 .stat-card {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.15); /* Fundo um pouco mais visível */
     padding: 0.75rem 1rem;
     border-radius: 8px;
     text-align: center;
-    min-width: 80px;
-    backdrop-filter: blur(10px);
+    min-width: 90px; /* Aumentado um pouco para melhor leitura */
+    backdrop-filter: blur(5px); /* Efeito de desfoque suave */
+    border: 1px solid rgba(255,255,255,0.2); /* Borda sutil */
 }
 
 .stat-card.urgent {
-    background: rgba(244, 67, 54, 0.2);
-    border: 1px solid rgba(244, 67, 54, 0.3);
+    background: rgba(244, 67, 54, 0.3); /* Mais visível */
+    border: 1px solid rgba(244, 67, 54, 0.4);
 }
 
 .stat-card.success {
-    background: rgba(76, 175, 80, 0.2);
-    border: 1px solid rgba(76, 175, 80, 0.3);
+    background: rgba(76, 175, 80, 0.3); /* Mais visível */
+    border: 1px solid rgba(76, 175, 80, 0.4);
 }
 
 .stat-number {
-    font-size: 1.5rem;
+    font-size: 1.6rem; /* Levemente maior */
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .stat-label {
-    font-size: 0.8rem;
-    opacity: 0.9;
+    font-size: 0.85rem; /* Levemente maior */
+    opacity: 0.95;
 }
 
-/* Layout principal */
+/* --- Layout principal --- */
 .main-layout {
     display: flex;
-    margin-top: 100px;
+    margin-top: 100px; /* Compensa a altura do header fixo */
     min-height: calc(100vh - 100px);
+    position: relative; /* Para posicionamento do modal-overlay */
 }
 
-/* Sidebar */
+/* --- Sidebar --- */
 .sidebar {
     width: 250px;
     background: linear-gradient(180deg, #ba18c2, #8768CE);
@@ -109,13 +101,13 @@ body {
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
     position: fixed;
     left: 0;
-    top: 100px; /* mesma altura do header */
+    top: 100px; /* Mesma altura do header */
     height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
     padding-top: 1.5rem;
     transition: all 0.3s ease;
-    border-top-right-radius: 07px;
+    border-top-right-radius: 7px; /* Ajustado para 7px */
     z-index: 999;
 }
 
@@ -131,137 +123,151 @@ body {
 .nav-item a {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1.5rem;
+    padding: 0.8rem 1.5rem; /* Levemente mais padding */
     color: #ffffff;
     text-decoration: none;
     transition: all 0.3s ease;
+    font-size: 1rem;
 }
 
 .nav-item a:hover,
 .nav-item.active a {
-    color: #8768ce;
-    border-right: 3px solid #8768ce;
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover/ativo */
+    color: #ffffff; /* Mantém a cor do texto branca */
+    border-right: 4px solid #e91e64; /* Cor de destaque no ativo/hover */
 }
 
 .nav-item i {
-    margin-right: 0.75rem;
+    margin-right: 0.8rem; /* Levemente mais espaço */
     width: 20px;
     text-align: center;
 }
 
-/* Menu toggle para mobile */
+/* --- Menu toggle para mobile --- */
 .menu-toggle {
-    display: none;
+    display: none; /* Escondido por padrão, mostrado em mobile */
     position: fixed;
-    top: 100px;
+    top: 115px; /* Abaixo do header */
     left: 1rem;
     z-index: 1001;
     background: linear-gradient(135deg, #ba18c2, #8768ce);
-    color: black;
+    color: white; /* Cor do ícone */
     border: none;
-    padding: 0.5rem;
-    border-radius: 4px;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
     cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Conteúdo principal */
+/* --- Conteúdo principal --- */
 .main-content {
     flex: 1;
-    margin-left: 250px;
+    margin-left: 250px; /* Espaço para a sidebar */
     padding: 2rem;
     transition: margin-left 0.3s ease;
+    background-color: #f5f5f5; /* Fundo do conteúdo */
 }
 
 .content-section {
     display: none;
+    min-height: calc(100vh - 140px); /* Ajusta a altura mínima para o conteúdo */
 }
 
 .content-section.active {
     display: block;
 }
 
-/* Filtros */
-.filters {
+/* --- Filtros (geral para dashboard e relatórios) --- */
+.filters, .report-filters {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem; /* Mais espaçamento */
     margin-bottom: 2rem;
     flex-wrap: wrap;
+    align-items: flex-end; /* Alinha itens na base */
 }
 
 .filter-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem; /* Mais padding */
     border: 1px solid #ddd;
     background: white;
     color: #666;
-    border-radius: 20px;
+    border-radius: 25px; /* Mais arredondado */
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-    background: #ba18c2;
+    background: linear-gradient(to right, #ba18c2, #8768CE); /* Gradiente no hover/ativo */
     color: white;
     border-color: #ba18c2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Container de denúncias */
+/* --- Container de denúncias --- */
 .denuncias-container {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.2rem; /* Mais espaçamento entre os cards */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Ajustado min-width */
 }
 
-/* Cards de denúncia */
+/* --- Cards de denúncia --- */
 .denuncia-card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px; /* Mais arredondado */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Sombra mais pronunciada */
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 
 .denuncia-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    transform: translateY(-5px); /* Efeito de "levantar" mais notável */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 .denuncia-card.urgente {
-    border-left: 4px solid #f44336;
+    border-left: 6px solid #f44336; /* Borda mais grossa */
 }
 
 .denuncia-card.nova {
-    border-left: 4px solid #ba18c2;
+    border-left: 6px solid #ba18c2;
 }
 
 .denuncia-card.atendida {
-    border-left: 4px solid #4caf50;
+    border-left: 6px solid #4caf50;
 }
 
 .denuncia-card.em-atendimento {
-    border-left: 4px solid #ff9800;
+    border-left: 6px solid #ff9800;
 }
 
 .card-header {
     padding: 1rem;
     border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fdfdfd; /* Fundo levemente diferente */
 }
 
 .card-title {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
     color: #333;
 }
 
 .card-status {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px; /* Mais arredondado */
     font-size: 0.8rem;
     font-weight: 500;
+    text-transform: uppercase; /* Texto em maiúsculas */
 }
 
 .status-urgente {
@@ -286,12 +292,13 @@ body {
 
 .card-body {
     padding: 1rem;
+    flex-grow: 1; /* Garante que o corpo ocupe o espaço restante */
 }
 
 .card-info {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem; /* Mais espaçamento */
     margin-bottom: 1rem;
 }
 
@@ -299,54 +306,60 @@ body {
     display: flex;
     align-items: center;
     font-size: 0.9rem;
-    color: #666;
+    color: #555; /* Cor um pouco mais escura */
 }
 
 .info-item i {
-    margin-right: 0.5rem;
-    width: 16px;
+    margin-right: 0.6rem;
+    width: 18px; /* Ícone um pouco maior */
     color: #999;
 }
 
 .card-footer {
-    padding: 0 1rem 1rem;
+    padding: 0.8rem 1rem 1rem; /* Ajustado padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid #eee; /* Linha separadora */
+    background-color: #fdfdfd;
 }
 
 .card-date {
-    font-size: 0.8rem;
-    color: #999;
+    font-size: 0.85rem;
+    color: #888;
 }
 
 .btn-detalhes {
-    background: #e91e64;
+    background: linear-gradient(to right, #e91e64, #c2185b); /* Gradiente no botão */
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.6rem 1.2rem; /* Mais padding */
+    border-radius: 6px; /* Mais arredondado */
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.3s ease;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .btn-detalhes:hover {
-    background: #c2185b;
+    background: linear-gradient(to right, #c2185b, #a0104a); /* Gradiente mais escuro no hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Painel de detalhes */
+/* --- Painel de detalhes --- */
 .details-panel {
-    width: 400px;
+    width: 450px; /* Levemente mais largo */
     background: white;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    box-shadow: -4px 0 15px rgba(0,0,0,0.15); /* Sombra mais forte */
     position: fixed;
-    right: -400px;
+    right: -450px; /* Escondido por padrão */
     top: 100px;
     height: calc(100vh - 100px);
     overflow-y: auto;
     transition: right 0.3s ease;
     z-index: 998;
+    border-top-left-radius: 10px; /* Borda arredondada */
 }
 
 .details-panel.open {
@@ -360,24 +373,28 @@ body {
     justify-content: space-between;
     align-items: center;
     background: #f8f9fa;
+    position: sticky; /* Fixa o cabeçalho ao rolar */
+    top: 0;
+    z-index: 10;
 }
 
 .details-header h3 {
     color: #333;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .close-details {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     cursor: pointer;
     color: #666;
     padding: 0.25rem;
+    transition: color 0.3s ease;
 }
 
 .close-details:hover {
-    color: #333;
+    color: #ba18c2; /* Cor de destaque no hover */
 }
 
 .details-content {
@@ -386,19 +403,34 @@ body {
 
 .detail-section {
     margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #eee; /* Linha tracejada */
+}
+
+.detail-section:last-child {
+    border-bottom: none; /* Remove a borda do último */
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .detail-section h4 {
-    color: #ba18c2;
+    color: #3c2a70; /* Cor mais escura para títulos de seção */
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     border-bottom: 2px solid #ba18c2;
     padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-section h4 i {
+    color: #ba18c2;
 }
 
 .detail-info {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.8rem;
 }
 
 .detail-item {
@@ -409,33 +441,41 @@ body {
 .detail-label {
     font-weight: 600;
     color: #555;
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
 }
 
 .detail-value {
     color: #333;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    word-wrap: break-word; /* Garante que textos longos quebrem a linha */
 }
 
 .actions-grid {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.8rem;
     grid-template-columns: 1fr 1fr;
 }
 
 .action-btn {
-    padding: 0.75rem;
+    padding: 0.8rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px; /* Mais arredondado */
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .btn-atendimento {
@@ -443,8 +483,9 @@ body {
     color: white;
 }
 
-.btn-atendimento:hover {
+.btn-atendimento:hover:not(:disabled) {
     background: #f57c00;
+    transform: translateY(-1px);
 }
 
 .btn-finalizar {
@@ -452,8 +493,9 @@ body {
     color: white;
 }
 
-.btn-finalizar:hover {
+.btn-finalizar:hover:not(:disabled) {
     background: #388e3c;
+    transform: translateY(-1px);
 }
 
 .btn-repassar {
@@ -461,8 +503,9 @@ body {
     color: white;
 }
 
-.btn-repassar:hover {
+.btn-repassar:hover:not(:disabled) {
     background: #1976d2;
+    transform: translateY(-1px);
 }
 
 .btn-cancelar {
@@ -470,32 +513,37 @@ body {
     color: white;
 }
 
-.btn-cancelar:hover {
+.btn-cancelar:hover:not(:disabled) {
     background: #d32f2f;
+    transform: translateY(-1px);
 }
 
 .btn-rota {
-    background: #ba18c2;
+    background: linear-gradient(to right, #ba18c2, #8768CE); /* Gradiente */
     color: white;
-    grid-column: 1 / -1;
+    grid-column: 1 / -1; /* Ocupa as duas colunas */
 }
 
-.btn-rota:hover {
-    background: #2a1a50;
+.btn-rota:hover:not(:disabled) {
+    background: linear-gradient(to right, #a0104a, #7058b0);
+    transform: translateY(-1px);
 }
 
-/* Mapa */
+/* --- Mapa --- */
 .mapa-container {
-    height: calc(100vh - 200px);
-    border-radius: 8px;
+    height: calc(100vh - 140px); /* Ajustado para preencher melhor o espaço */
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .mapa {
     width: 100%;
     height: 100%;
-    background: #e0e0e0;
+    background: #e0e0e0; /* Cor de fundo padrão */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -503,7 +551,7 @@ body {
     font-size: 1.1rem;
 }
 
-/* Modal overlay */
+/* --- Modal overlay --- */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -511,6 +559,295 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6); /* Escurecido um pouco mais */
     z-index: 997;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+/* --- Notificações --- */
+.notificacao {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    background: #2196f3;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px; /* Mais arredondado */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 10000;
+    animation: slideInRight 0.4s ease-out forwards; /* Animação mais suave */
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.notificacao.success {
+    background: #4caf50;
+}
+
+.notificacao.error {
+    background: #f44336;
+}
+
+.notificacao i {
+    font-size: 1.2rem;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+}
+
+/* --- Estilos para a Seção de Configurações (Melhorados) --- */
+#configuracoes-section {
+    padding: 2rem;
+    background-color: #ffffff; /* Fundo branco para a seção */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+#configuracoes-section h2 {
+    color: #3c2a70; /* Cor principal do seu tema */
+    margin-bottom: 1.8rem; /* Mais espaço */
+    font-size: 2rem; /* Título maior */
+    border-bottom: 3px solid #ba18c2; /* Linha decorativa mais grossa */
+    padding-bottom: 0.8rem;
+    text-align: center; /* Centraliza o título */
+}
+
+#form-config {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Mais espaçamento entre os grupos de formulário */
+}
+
+.form-group {
+    background-color: #fcfcfc; /* Fundo levemente diferente para grupos */
+    padding: 1.8rem; /* Mais padding */
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-group label:not(.checkbox-container) {
+    display: block;
+    margin-bottom: 1rem; /* Mais espaço */
+    font-weight: 600;
+    color: #444;
+    font-size: 1.1rem; /* Fonte maior */
+}
+
+/* --- Estilo para Selects --- */
+.form-group select {
+    width: 100%;
+    padding: 0.9rem 1.2rem; /* Mais padding */
+    border: 1px solid #bbb;
+    border-radius: 8px; /* Mais arredondado */
+    background-color: #fff;
+    font-size: 1rem;
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666666%22%20d%3D%22M287%2C197.3L159.3%2C69.6c-3.7-3.7-9.7-3.7-13.4%2C0L5.3%2C197.3c-3.7%2C3.7-3.7%2C9.7%2C0%2C13.4l10.7%2C10.7c3.7%2C3.7%2C9.7%2C3.7%2C13.4%2C0l115.3-115.3l115.3%2C115.3c3.7%2C3.7%2C9.7%2C3.7%2C13.4%2C0l10.7-10.7C290.7%2C207%2C290.7%2C201%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E' );
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.9em; /* Ícone um pouco maior */
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group select:focus {
+    border-color: #ba18c2;
+    box-shadow: 0 0 0 4px rgba(186, 24, 194, 0.25); /* Sombra ao focar mais pronunciada */
+    outline: none;
+}
+
+/* --- Estilo para Checkboxes Customizados --- */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 2.8rem; /* Mais espaço para o checkbox customizado */
+    margin-bottom: 1rem; /* Mais espaço */
+    cursor: pointer;
+    font-size: 1rem;
+    color: #333;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Esconde o checkbox padrão do navegador */
+.checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Cria o checkbox customizado (o span.checkmark) */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.6rem; /* Levemente maior */
+    width: 1.6rem; /* Levemente maior */
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Mais arredondado */
+    transition: all 0.2s ease;
+}
+
+/* Estilo quando o mouse passa por cima */
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ddd;
+}
+
+/* Estilo quando o checkbox está marcado */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #ba18c2; /* Cor do seu tema */
+    border-color: #ba18c2;
+}
+
+/* Cria o ícone de "check" (o tick) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Mostra o ícone de "check" quando marcado */
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Estilo do ícone de "check" */
+.checkbox-container .checkmark:after {
+    left: 0.55rem; /* Ajustado posição */
+    top: 0.25rem; /* Ajustado posição */
+    width: 0.4rem;
+    height: 0.8rem;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* --- Estilo para o botão Salvar Configurações --- */
+#form-config .btn-detalhes {
+    align-self: center; /* Centraliza o botão */
+    margin-top: 1.5rem;
+    padding: 1rem 2.5rem; /* Mais padding */
+    font-size: 1.2rem; /* Fonte maior */
+    background: linear-gradient(to right, #ba18c2, #8768CE);
+    border: none;
+    border-radius: 10px; /* Mais arredondado */
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+#form-config .btn-detalhes:hover {
+    opacity: 0.9;
+    transform: translateY(-3px); /* Efeito de "levantar" mais notável */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Mensagem de feedback */
+#mensagem-config {
+    margin-top: 2rem;
+    padding: 1.2rem;
+    background-color: #e6ffe6;
+    border: 1px solid #4caf50;
+    color: #333;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* --- Estilos para a Seção de Relatórios --- */
+#relatorios-section {
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+#relatorios-section h2 {
+    color: #3c2a70;
+    margin-bottom: 1.8rem;
+    font-size: 2rem;
+    border-bottom: 3px solid #ba18c2;
+    padding-bottom: 0.8rem;
+    text-align: center;
+}
+
+.report-filters .form-group {
+    margin-bottom: 0; /* Remove margin-bottom padrão para flexbox */
+}
+
+.report-filters label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.report-filters select,
+.report-filters input[type="date"] {
+    padding: 0.8rem 1rem;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.report-filters select:focus,
+.report-filters input[type="date"]:focus {
+    border-color: #ba18c2;
+    box-shadow: 0 0 0 4px rgba(186, 24, 194, 0.25);
+    outline: none;
+}
+
+#gerar-relatorio {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    margin-left: 1rem; /* Espaçamento do botão */
+    align-self: flex-end; /* Alinha com os campos de formulário */
+}
+
+#relatorio-resultado {
+    margin-top: 2.5rem;
+    background-color: #fcfcfc;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0,   0, 0.08);
 }
