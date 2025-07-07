@@ -323,9 +323,9 @@ function alterarStatus(novoStatus) {
 function repassarDenuncia() {
     if (!denunciaAtual) return;
     
-    const viatura = prompt('Digite o código da viatura para repassar:');
+    const viatura = prompt('Digite o código para repassar a denúncia:');
     if (viatura) {
-        mostrarNotificacao(`Denúncia repassada para a viatura ${viatura}`, 'success');
+        mostrarNotificacao(`Denúncia repassada para as autoridades ${viatura}`, 'success');
     }
 }
 
