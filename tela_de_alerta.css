@@ -67,7 +67,6 @@ body {
     vertical-align: middle;
 }
 
-/* Barra de Navegação - Mais à direita */
 .main-nav {
     position: sticky;
     top: 0;
@@ -98,10 +97,6 @@ body {
     transform: translateX(20px);
 }
 
-.nav-item {
-    position: relative;
-}
-
 .nav-item a {
     color: var(--white);
     text-decoration: none;
@@ -112,6 +107,7 @@ body {
     text-align: center;
     font-size: 0.95rem;
     border-radius: 30px;
+    
 }
 
 .nav-item a:hover {
@@ -251,10 +247,10 @@ body {
 }
 
 .form-group label {
-    display: block;
+    display:flexbox;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    display: flex;
+    display:inline-flex;
     align-items: center;
     gap: 0.5rem;
     color: var(--primary-color);
@@ -264,7 +260,7 @@ body {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.8rem;
+    padding: 0.7rem;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-family: 'Nunito', sans-serif;

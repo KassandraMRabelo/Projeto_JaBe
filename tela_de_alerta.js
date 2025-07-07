@@ -653,7 +653,7 @@ closePermissionModal.addEventListener('click', () => { // ✅ ADICIONADO
     });
 
 
-    /* Fechar modal ao clicar fora
+    //Fechar modal ao clicar fora
     window.addEventListener('click', (e) => {
         if (e.target === confirmationModal) {
             closeConfirmationModal();
@@ -661,7 +661,7 @@ closePermissionModal.addEventListener('click', () => { // ✅ ADICIONADO
         if (e.target === permissionModal) {
             hidePermissionModal();
         }
-    }); */
+    });
 
 
     document.querySelector('.nav-item a[href="#inicio"]').click();

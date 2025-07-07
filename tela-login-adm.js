@@ -11,7 +11,7 @@ form.addEventListener('submit', function (e) {
     message.style.color = 'green';
     message.textContent = 'Acesso autorizado!';
     setTimeout(() => {
-      window.location.href = "painel-adm.html"; 
+      window.location.href = "index.html"; 
     }, 1000);
   } else {
     message.style.color = 'red';

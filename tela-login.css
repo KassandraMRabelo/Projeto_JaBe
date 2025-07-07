@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #d159cd;
+    --primary-color: #ba18c2;
     --white: #ffffff;
     --dark: #212121;
 }
@@ -15,14 +15,14 @@ body {
 .main-header {
     background-color: var(--primary-color);
     color: white;
-    padding: 35px;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .logo {
-    width: 120px;
+    width: 150px;
     height: auto;
 }
 
@@ -91,10 +91,19 @@ h2 {
     background-color: #f1f1f1;
 }
 
+.btn-login.custom {
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    color: #ba18c2;
+    border: 1px solid #ccc;
+    
+}
+
 .main-footer {
     text-align: center;
     padding: 20px;
-    background-color: #d159cd;
+    background-color: #ba18c2;
     font-size: 14px;
     color: #fff;
     position: fixed;
